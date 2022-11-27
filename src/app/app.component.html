@@ -1,0 +1,98 @@
+<div class="nav">
+  <ul>
+    <li>Angular TODO Application</li>
+  </ul>
+</div>
+
+<div class="d-flex justify-content-around">
+  <div class="containerm mt-4">
+    <h2 class="text-center">TODO TASK</h2>
+    <button *ngIf="isEdit" class="btn btn-success" (click)="resetForm()">
+      <i class="bi bi-backspace-fill"></i>
+    </button>
+    <form [formGroup]="TodoList" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        name="task"
+        id="task"
+        placeholder="Title....."
+        formControlName="task"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && TodoList.controls.task.errors }"
+      />
+      <div
+        *ngIf="submitted && TodoList.controls.task.errors"
+        class="text-danger"
+      >
+        <div *ngIf="TodoList.controls.task.errors['required']">
+          Task is required
+        </div>
+      </div>
+
+      <input
+        type="text"
+        name="desc"
+        id="desc"
+        placeholder="Description....."
+        formControlName="des"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && TodoList.controls.des.errors }"
+      />
+      <div
+        *ngIf="submitted && TodoList.controls.des.errors"
+        class="text-danger"
+      >
+        <div *ngIf="TodoList.controls.des.errors['required']">
+          Description is required
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">
+        {{ isEdit ? "Update" : "Add" }}
+      </button>
+      <!-- 
+      <button *ngIf="!isEdit" class="btn btn-primary" type="submit">ADD</button>
+      <button *ngIf="isEdit" class="btn btn-primary" type="submit">
+        UPDATE
+      </button> -->
+    </form>
+  </div>
+  <!-- Todo Table  -->
+  <div class="tb mt-4">
+    <table class="table text-center">
+      <thead>
+        <th>Sr No</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <tr *ngIf="list.length < 1">
+          <td colspan="5">
+            <h2 class="text=center">NO TASK FOUND</h2>
+          </td>
+        </tr>
+        <tr *ngFor="let todo of list; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ todo.task }}</td>
+          <td>{{ todo.des }}</td>
+          <td class="btn">
+            <button
+              class="btn btn-warning"
+              type="button"
+              (click)="action('edit', i, todo.task, todo.des)"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-danger"
+              type="button"
+              (click)="action('delete', i, todo.task, todo.des)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
