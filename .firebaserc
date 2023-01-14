@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "default": "todo-angular-app-de3d9"
+  }
+}
